@@ -1,4 +1,5 @@
 private/
+nbproject/
 *.properties
 *.xml
 *.mf
