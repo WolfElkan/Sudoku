@@ -1,4 +1,5 @@
 abstract class Sudoku {
+	private int[][] zones;
 	public int pow(int num, int exp) {
 		int result = 1;
 		for (int i=0; i<exp; i++) {
@@ -9,6 +10,7 @@ abstract class Sudoku {
 	Number content[];
 	int size;
 	int scale;
+	// Constructor
 	public Sudoku(int scale) {
 		this.scale = scale;
 		this.size = pow(scale,4);
@@ -16,6 +18,9 @@ abstract class Sudoku {
 		for (int i=0; i<size; i++) {
 			content[i] = new Number(pow(scale,2));
 		}
+	}
+	protected void setzones(int[][] zones) {
+		this.zones = zones;
 	}
 	public void print() {
 		String bar = "+"; // Construct bar
@@ -55,12 +60,31 @@ class Sudoku3x3 extends Sudoku {
 class Sudoku2x2 extends Sudoku {
 	public Sudoku2x2() {
 		super(2);
+		int[][] zones = {
+
+			{ 0, 1, 2, 3}, // Rows
+			{ 4, 5, 6, 7},
+			{ 8, 9,10,11},
+			{12,13,14,15},
+
+			{ 0, 4, 8,12}, // Columns
+			{ 1, 5, 9,13},
+			{ 2, 6,10,14},
+			{ 3, 7,11,15},
+
+			{ 0, 1, 4, 5}, // Boxes
+			{ 2, 3, 6, 7},
+			{ 8, 9,12,13},
+			{10,11,14,15},
+
+		};
+		this.setzones(zones);
 	}
 }
 
 class Solver {
 	public static void main(String[] args) {
-		Sudoku3x3 sd = new Sudoku3x3();
+		Sudoku2x2 sd = new Sudoku2x2();
 		sd.print();
 	}
 }
