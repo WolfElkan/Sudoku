@@ -42,7 +42,22 @@ class Number { // A number that can be in superposition
 	public boolean isknown() {
 		return nEliminated + 1 == max;
 	}
+	public String DCLBOX() {
+		String powerSet4 = " DCLBOX1ATE2H34#";
+		int index = 0;
+		int power = 1;
+		for (int i=3; i>=0; i--) {
+			if (!possible[i]) {
+				index += power;
+			}
+			power *= 2;
+		}
+		return powerSet4.substring(index,index+1);
+	}
 	public String toString() {
+		if (true) {
+			return DCLBOX();
+		}
 		if (!isknown()) {
 			return " ";
 		} else if (value < 10 - offset) {

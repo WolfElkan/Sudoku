@@ -110,6 +110,7 @@ abstract class Sudoku {
 			}
 		}
 	}
+	public void 
 	public void print() {
 		String bar = "+"; // Construct bar
 		for (int i=0; i<scale; i++) {
