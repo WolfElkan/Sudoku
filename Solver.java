@@ -7,7 +7,7 @@ abstract class Sudoku {
 		}
 		return result;
 	}
-	protected int base_scale(int i, int j, int k, int l) {
+	protected int b(int i, int j, int k, int l) {
 		int total = 0;
 		total += i;
 		total *= scale;
@@ -18,13 +18,13 @@ abstract class Sudoku {
 		total += l;
 		return total;
 	}
-	protected int base_scale(int j, int k, int l) {
-		return base_scale(0,j,k,l);
+	protected int b(int j, int k, int l) {
+		return b(0,j,k,l);
 	}
-	protected int base_scale(int k, int l) {
-		return base_scale(0,k,l);
+	protected int b(int k, int l) {
+		return b(0,k,l);
 	}
-	protected int base_scale(int l) {
+	protected int b(int l) {
 		return l;
 	}
 	public void padprint(int num, int pad) {
@@ -87,25 +87,28 @@ abstract class Sudoku {
 			for (int j=0; j<scale; j++) {
 				for (int k=0; k<scale; k++) {
 					for (int l=0; l<scale; l++) {
-						// System.out.print(i);
-						// System.out.print(j);
-						// System.out.print(k);
-						// System.out.print(l);
-						int row = base_scale(i,j);
-						int col = base_scale(k,l);
-						int val = base_scale(i,k,j,l);
+						// int row = b(i,j);
+						// int col = b(k,l);
+						// int val = b(i,k,j,l);
 						// padprint(row,4);
 						// padprint(col,4);
 						// padprint(val,4);
 						// padprint(zones[row][col],5);
 						// System.out.println();
 						// int val = k + l * max;
-						zones[row+offset][col] = val;
+						zones[b(i,j)+offset][b(k,l)] = b(i,k,j,l);
 					}
 				}
 			}
 		}
 		System.out.println();
+	}
+	public void given(int[] givens) {
+		for (int i=0; i<size; i++) {
+			if (givens[i] != 0) {
+				content[i].mustbe(givens[i]);
+			}
+		}
 	}
 	public void print() {
 		String bar = "+"; // Construct bar
@@ -151,8 +154,15 @@ class Sudoku2x2 extends Sudoku {
 class Solver {
 	public static void main(String[] args) {
 		Sudoku2x2 sd = new Sudoku2x2();
-		sd.print();
 		sd.assume_zones();
+		int[] puzzle = {
+			0, 1, 0, 0,
+			4, 2, 0, 0,
+			0, 0, 2, 0,
+			0, 3, 0, 0,
+		};
+		sd.given(puzzle);
+		sd.print();
 		// print(sd.zones, 12, 4);
 	}
 	public static void print(int[][] arr, int len, int wid) {
