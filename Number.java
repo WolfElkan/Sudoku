@@ -17,8 +17,10 @@ class Number { // A number that can be in superposition
 		}
 	}
 	public void isnot(int num) {
-		possible[num-offset] = false;
-		nEliminated++;
+		if (num != 0 || offset == 0) {
+			possible[num-offset] = false;
+			nEliminated++;
+		}
 	}
 	// Add must
 	public boolean canbe(int num) {

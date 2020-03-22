@@ -1,4 +1,6 @@
 abstract class Sudoku {
+	public int nZones;
+	public int lZones;
 	public int[][] zones; // eventually make this private
 	public int pow(int num, int exp) {
 		int result = 1;
@@ -50,8 +52,8 @@ abstract class Sudoku {
 		this.zones = zones;
 	}
 	public void assume_zones() {
-		int nZones = pow(scale,2) * 3;
-		int lZones = pow(scale,2);
+		nZones = pow(scale,2) * 3;
+		lZones = pow(scale,2);
 		int[][] zones = new int[nZones][lZones];
 		get_zones(zones);
 		set_zones(zones);
@@ -110,7 +112,28 @@ abstract class Sudoku {
 			}
 		}
 	}
-	public void 
+	public void eliminate() {
+		for (int z=0; z<nZones; z++) {
+			System.out.print(z);
+			System.out.println("---");
+			for (int y=0; y<lZones; y++) {
+				int x = zones[z][y];
+				System.out.println(x);
+				Number num = content[x];
+				System.out.println(num);
+				if (num.isknown()) {
+					for (int y1=0; y1<lZones; y1++) {
+						if (y1 != y) {
+							int x1 = zones[z][y1];
+							Number num1 = content[x1];
+							// System.out.println(num.value());
+							num1.isnot(num.value());
+						}
+					}
+				}
+			}
+		}
+	}
 	public void print() {
 		String bar = "+"; // Construct bar
 		for (int i=0; i<scale; i++) {
@@ -163,6 +186,7 @@ class Solver {
 			0, 3, 0, 0,
 		};
 		sd.given(puzzle);
+		sd.eliminate();
 		sd.print();
 		// print(sd.zones, 12, 4);
 	}
