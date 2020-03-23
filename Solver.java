@@ -114,24 +114,36 @@ abstract class Sudoku {
 	}
 	public void eliminate() {
 		for (int z=0; z<nZones; z++) {
-			System.out.print(z);
-			System.out.println("---");
+			// System.out.print("z: ");
+			// System.out.print(z);
+			// System.out.println("---");
 			for (int y=0; y<lZones; y++) {
 				int x = zones[z][y];
-				System.out.println(x);
 				Number num = content[x];
-				System.out.println(num);
 				if (num.isknown()) {
+					int val = num.value();
+					// System.out.print(x);
+					// System.out.println(':');
 					for (int y1=0; y1<lZones; y1++) {
 						if (y1 != y) {
 							int x1 = zones[z][y1];
 							Number num1 = content[x1];
-							// System.out.println(num.value());
-							num1.isnot(num.value());
+							// System.out.println(val);
+							num1.isnot(val);
 						}
 					}
 				}
 			}
+			// for (int y=0; y<lZones; y++) {
+			// 	int x = zones[z][y];
+			// 	Number num = content[x];
+			// 	// System.out.print("  y: ");
+			// 	// System.out.print(y);
+			// 	System.out.print("x: ");
+			// 	System.out.print(x);
+			// 	System.out.print(",  num: ");
+			// 	System.out.println(num);
+			// }
 		}
 	}
 	public void print() {
@@ -186,6 +198,9 @@ class Solver {
 			0, 3, 0, 0,
 		};
 		sd.given(puzzle);
+		sd.print();
+		sd.eliminate();
+		sd.print();
 		sd.eliminate();
 		sd.print();
 		// print(sd.zones, 12, 4);

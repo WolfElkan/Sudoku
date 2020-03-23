@@ -4,6 +4,7 @@ class Number { // A number that can be in superposition
 	private int value = 0;
 	private int max;
 	private int offset;
+	private boolean known = false;
 	public Number(int max) {
 		this.max = max;
 		if (max == 36) {
@@ -21,8 +22,15 @@ class Number { // A number that can be in superposition
 			possible[num-offset] = false;
 			nEliminated++;
 		}
+		if (nEliminated == max - 1) {
+			known = true;
+			for (int i=0; i<max; i++) {
+				if (possible[i]) {
+					value = i + 1;
+				}
+			}
+		}
 	}
-	// Add must
 	public boolean canbe(int num) {
 		return possible[num-offset];
 	}
@@ -33,16 +41,18 @@ class Number { // A number that can be in superposition
 		possible[num-offset] = true;
 		nEliminated = max - 1;
 		value = num;
+		known = true;
 	}
 	public int value() {
-		if (nEliminated == max - 1) {
+		if (known) {
 			return value;
 		} else {
 			return 0;
 		}
 	}
 	public boolean isknown() {
-		return nEliminated + 1 == max;
+		// return nEliminated == max - 1;
+		return known;
 	}
 	public String DCLBOX() {
 		String powerSet4 = " DCLBOX1ATE2H34#";
