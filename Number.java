@@ -5,6 +5,7 @@ class Number { // A number that can be in superposition
 	private int max;
 	private int offset;
 	private boolean known = false;
+	public boolean debug = false;
 	public Number(int max) {
 		this.max = max;
 		if (max == 36) {
@@ -18,23 +19,28 @@ class Number { // A number that can be in superposition
 		}
 	}
 	public void isnot(int num) {
-		System.out.print(this);
-		System.out.print(" - ");
-		System.out.print(num);
-		if (num != 0 || offset == 0) {
+		if (debug) {
+			System.out.print(this);
+			System.out.print(" - ");
+			System.out.print(num);
+		}
+		if (possible[num-offset]) {
 			possible[num-offset] = false;
 			nEliminated++;
-		}
-		if (nEliminated == max - 1) {
-			known = true;
-			for (int i=0; i<max; i++) {
-				if (possible[i]) {
-					value = i + 1;
+			if (nEliminated == max - 1) {
+				known = true;
+				for (int i=0; i<max; i++) {
+					if (possible[i]) {
+						value = i + 1;
+					}
 				}
 			}
+			if (debug) {
+				System.out.print(" -> ");
+				System.out.print(this);
+			}
 		}
-		System.out.print(" -> ");
-		System.out.println(this);
+		if (debug) {System.out.println();}
 	}
 	public boolean canbe(int num) {
 		return possible[num-offset];

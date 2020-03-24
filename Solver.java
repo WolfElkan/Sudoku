@@ -1,4 +1,5 @@
 abstract class Sudoku {
+	public boolean debug = false;
 	public int nZones;
 	public int lZones;
 	public int[][] zones; // eventually make this private
@@ -116,22 +117,27 @@ abstract class Sudoku {
 	}
 	public void eliminate() {
 		for (int z=0; z<nZones; z++) {
-			// System.out.print("z: ");
-			System.out.print(zone_names[z]);
-			System.out.println("--------");
+			if (debug) {
+				System.out.print(zone_names[z]);
+				System.out.println("-----------");
+			}
 			for (int y=0; y<lZones; y++) {
 				int x = zones[z][y];
 				Number num = content[x];
 				if (num.isknown()) {
 					int val = num.value();
-					System.out.print(cell_names[x]);
-					System.out.println("----");
+					if (debug) {
+						System.out.print(cell_names[x]);
+						System.out.println("----");
+					}
 					for (int y1=0; y1<lZones; y1++) {
 						if (y1 != y) {
 							int x1 = zones[z][y1];
 							Number num1 = content[x1];
-							System.out.print(cell_names[x1]);
-							System.out.print(": ");
+							if (debug) {
+								System.out.print(cell_names[x1]);
+								System.out.print(": ");
+							}
 							num1.isnot(val);
 						}
 					}
