@@ -118,19 +118,20 @@ abstract class Sudoku {
 		for (int z=0; z<nZones; z++) {
 			// System.out.print("z: ");
 			System.out.print(zone_names[z]);
-			System.out.println("-------");
+			System.out.println("--------");
 			for (int y=0; y<lZones; y++) {
 				int x = zones[z][y];
 				Number num = content[x];
 				if (num.isknown()) {
 					int val = num.value();
 					System.out.print(cell_names[x]);
-					System.out.println(':');
+					System.out.println("----");
 					for (int y1=0; y1<lZones; y1++) {
 						if (y1 != y) {
 							int x1 = zones[z][y1];
 							Number num1 = content[x1];
-							System.out.println(val);
+							System.out.print(cell_names[x1]);
+							System.out.print(": ");
 							num1.isnot(val);
 						}
 					}
