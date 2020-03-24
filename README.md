@@ -24,3 +24,29 @@ This table shows what the different symbols mean.  The letters A, B, C, and D co
 |No |No |No |No | # | Error, no solution |
 
 (The name DCLBOX comes from the first six letters reading down the table.)
+
+## Test Case
+
+The solver currently has the following test case hard-coded:
+
+    ┏━━━┯━━━┳━━━┯━━━┓
+    ┃   │ 1 ┃   │   ┃
+    ┠───┼───╂───┼───┨
+    ┃ 4 │ 2 ┃   │   ┃
+    ┣━━━┿━━━╋━━━┿━━━┫
+    ┃   │   ┃ 2 │   ┃
+    ┠───┼───╂───┼───┨
+    ┃   │ 3 ┃   │   ┃
+    ┗━━━┷━━━┻━━━┷━━━┛
+
+To which the solution is:
+
+    ┏━━━┯━━━┳━━━┯━━━┓
+    ┃ 3 │ 1 ┃ 4 │ 2 ┃
+    ┠───┼───╂───┼───┨
+    ┃ 4 │ 2 ┃ 3 │ 1 ┃
+    ┣━━━┿━━━╋━━━┿━━━┫
+    ┃ 1 │ 4 ┃ 2 │ 3 ┃
+    ┠───┼───╂───┼───┨
+    ┃ 2 │ 3 ┃ 1 │ 4 ┃
+    ┗━━━┷━━━┻━━━┷━━━┛

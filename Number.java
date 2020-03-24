@@ -18,6 +18,9 @@ class Number { // A number that can be in superposition
 		}
 	}
 	public void isnot(int num) {
+		System.out.print(this);
+		System.out.print(" - ");
+		System.out.print(num);
 		if (num != 0 || offset == 0) {
 			possible[num-offset] = false;
 			nEliminated++;
@@ -30,6 +33,8 @@ class Number { // A number that can be in superposition
 				}
 			}
 		}
+		System.out.print(" -> ");
+		System.out.println(this);
 	}
 	public boolean canbe(int num) {
 		return possible[num-offset];

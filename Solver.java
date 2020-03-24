@@ -2,6 +2,8 @@ abstract class Sudoku {
 	public int nZones;
 	public int lZones;
 	public int[][] zones; // eventually make this private
+	public String[] zone_names;
+	public String[] cell_names;
 	public int pow(int num, int exp) {
 		int result = 1;
 		for (int i=0; i<exp; i++) {
@@ -115,20 +117,20 @@ abstract class Sudoku {
 	public void eliminate() {
 		for (int z=0; z<nZones; z++) {
 			// System.out.print("z: ");
-			// System.out.print(z);
-			// System.out.println("---");
+			System.out.print(zone_names[z]);
+			System.out.println("-------");
 			for (int y=0; y<lZones; y++) {
 				int x = zones[z][y];
 				Number num = content[x];
 				if (num.isknown()) {
 					int val = num.value();
-					// System.out.print(x);
-					// System.out.println(':');
+					System.out.print(cell_names[x]);
+					System.out.println(':');
 					for (int y1=0; y1<lZones; y1++) {
 						if (y1 != y) {
 							int x1 = zones[z][y1];
 							Number num1 = content[x1];
-							// System.out.println(val);
+							System.out.println(val);
 							num1.isnot(val);
 						}
 					}
@@ -184,6 +186,28 @@ class Sudoku3x3 extends Sudoku {
 class Sudoku2x2 extends Sudoku {
 	public Sudoku2x2() {
 		super(2);
+		String zone_names[] = {
+			"Row 1",
+			"Row 2",
+			"Row 3",
+			"Row 4",
+			"Col A",
+			"Col B",
+			"Col C",
+			"Col D",
+			"Box UL",
+			"Box UR",
+			"Box DL",
+			"Box DR",
+		};
+		String cell_names[] = {
+			"A1", "B1", "C1", "D1",
+			"A2", "B2", "C2", "D2",
+			"A3", "B3", "C3", "D3",
+			"A4", "B4", "C4", "D4",
+		};
+		this.zone_names = zone_names;
+		this.cell_names = cell_names;
 	}
 }
 
