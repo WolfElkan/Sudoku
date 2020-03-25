@@ -47,8 +47,10 @@ abstract class Sudoku {
 		this.scale = scale;
 		this.size = pow(scale,4);
 		content = new Number[size];
+		int max = pow(scale,2);
 		for (int i=0; i<size; i++) {
-			content[i] = new Number(pow(scale,2));
+			content[i] = new Number(max);
+			content[i].debug = debug;
 		}
 	}
 	protected void set_zones(int[][] zones) {
@@ -155,6 +157,49 @@ abstract class Sudoku {
 			// }
 		}
 	}
+	public int iterate() {
+		// Record current state (copy contents)
+
+		// eliminate()
+
+		// check state:
+			// if all Numbers are known:
+				// return 2
+			// if state is the same as it was before:
+				// return 0
+			// if contents contains Numbers where all are false:
+				// return -1
+			// else:
+				// return 1
+
+		return 2;
+		//  2 = Solved
+		//  0 = Stalled
+		// -1 = Error
+		//  1 = Progress
+	}
+	public int solve() {
+		int result;
+		do {
+			result = iterate();
+		} while (result == 1);
+		if (result == 2 || result == -1) {
+			return result;
+		}
+		// while result == 0:
+			// save puzzle's current state as variable
+			//   (associated with this call of the method)
+			// choose a Number 
+			// choose a value that is still possible for it
+			// assert that it must be that value
+			// result = solve() [we're getting recursive now]
+			// if result == 2:
+				// return result
+			// else if result == -1:
+				// restore puzzle to saved state
+				// assert that originally chosen Number is NOT
+				//   the originally chosen value, and repeat.
+	}
 	public void print() {
 		String bar = "+"; // Construct bar
 		for (int i=0; i<scale; i++) {
@@ -220,13 +265,18 @@ class Sudoku2x2 extends Sudoku {
 
 class Solver {
 	public static void main(String[] args) {
-		Sudoku2x2 sd = new Sudoku2x2();
+		Sudoku3x3 sd = new Sudoku3x3();
 		sd.assume_zones();
 		int[] puzzle = {
-			0, 1, 0, 0,
-			4, 2, 0, 0,
-			0, 0, 2, 0,
-			0, 3, 0, 0,
+			 0, 0, 0, 0, 5, 0, 0, 0, 8,
+			 0, 0, 0, 0, 0, 0, 6, 0, 0,
+			 0, 0, 7, 3, 0, 6, 0, 0, 0,
+			 0, 0, 1, 8, 0, 0, 0, 7, 0,
+			 0, 2, 0, 0, 3, 0, 0, 0, 1,
+			 0, 0, 3, 0, 2, 0, 0, 6, 0,
+			 0, 7, 0, 0, 8, 5, 0, 0, 0,
+			 6, 3, 4, 0, 0, 7, 0, 0, 0,
+			 5, 0, 0, 0, 1, 0, 0, 0, 0,
 		};
 		sd.given(puzzle);
 		sd.print();
@@ -234,6 +284,21 @@ class Solver {
 		sd.print();
 		sd.eliminate();
 		sd.print();
+		sd.eliminate();
+		sd.print();
+		sd.eliminate();
+		sd.print();
+		sd.eliminate();
+		sd.print();
+		sd.eliminate();
+		sd.print();
+		sd.eliminate();
+		sd.print();
+		sd.eliminate();
+		sd.print();
+		// sd.content[3].verbose();
+		// System.out.println(sd.content[3].nEliminated);
+		// System.out.println(sd.content[3].known);
 		// print(sd.zones, 12, 4);
 	}
 	public static void print(int[][] arr, int len, int wid) {

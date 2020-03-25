@@ -1,10 +1,10 @@
 class Number { // A number that can be in superposition
 	private boolean[] possible;
-	private int nEliminated = 0;
+	public int nEliminated = 0;
 	private int value = 0;
 	private int max;
 	private int offset;
-	private boolean known = false;
+	public boolean known = false;
 	public boolean debug = false;
 	public Number(int max) {
 		this.max = max;
@@ -77,17 +77,34 @@ class Number { // A number that can be in superposition
 		}
 		return powerSet4.substring(index,index+1);
 	}
+	public String blocks() {
+		if (isknown()) {
+			return Integer.toString(value);
+		} else {
+			return " ▁▂▃▄▅▆▇!#".substring(nEliminated,nEliminated+1);
+		}
+	}
 	public String toString() {
-		if (true) {
+		if (false) {
 			return DCLBOX();
+		} else if (true) {
+			return blocks();
 		}
 		if (!isknown()) {
 			return " ";
-		} else if (value < 10 - offset) {
+		} else if (value < 11 - offset) {
 			return Integer.toString(value);
 		} else {
-			String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-			return alpha.substring(value-10,1);
+			return " ";
+			// String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			// return alpha.substring(value-10,1);
+		}
+	}
+	public void verbose() {
+		for (int i=0; i<max; i++) {
+			System.out.print(i+1);
+			System.out.print(": ");
+			System.out.println(possible[i]);
 		}
 	}
 }
