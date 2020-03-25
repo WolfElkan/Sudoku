@@ -158,25 +158,30 @@ abstract class Sudoku {
 		}
 	}
 	public int iterate() {
-		// Record current state (copy contents)
+		/// Record current state (copy contents)
+		Number[] current = new Number[size];
+		for (int i=0; i<size; i++) {
+			current[i] = this.content[i];
+		}
 
-		// eliminate()
+		/// Run eliminate
+		eliminate();
 
-		// check state:
-			// if all Numbers are known:
-				// return 2
-			// if state is the same as it was before:
-				// return 0
-			// if contents contains Numbers where all are false:
-				// return -1
-			// else:
-				// return 1
+		/// check state:
+			/// if all Numbers are known:
+				/// return 2
+			/// if state is the same as it was before:
+				/// return 0
+			/// if contents contains Numbers where all are false:
+				/// return -1
+			/// else:
+				/// return 1
 
 		return 2;
-		//  2 = Solved
-		//  0 = Stalled
-		// -1 = Error
-		//  1 = Progress
+		///  2 = Solved
+		///  0 = Stalled
+		/// -1 = Error
+		///  1 = Progress
 	}
 	public int solve() {
 		int result;
@@ -186,19 +191,20 @@ abstract class Sudoku {
 		if (result == 2 || result == -1) {
 			return result;
 		}
-		// while result == 0:
-			// save puzzle's current state as variable
-			//   (associated with this call of the method)
-			// choose a Number 
-			// choose a value that is still possible for it
-			// assert that it must be that value
-			// result = solve() [we're getting recursive now]
-			// if result == 2:
-				// return result
-			// else if result == -1:
-				// restore puzzle to saved state
-				// assert that originally chosen Number is NOT
-				//   the originally chosen value, and repeat.
+		/// while result == 0:
+			/// save puzzle's current state as variable
+			///   (associated with this call of the method)
+			/// choose a Number 
+			/// choose a value that is still possible for it
+			/// assert that it must be that value
+			/// result = solve() [we're getting recursive now]
+			/// if result == 2:
+				/// return result
+			/// else if result == -1:
+				/// restore puzzle to saved state
+				/// assert that originally chosen Number is NOT
+				///   the originally chosen value, and repeat.
+		return 2;
 	}
 	public void print() {
 		String bar = "+"; // Construct bar
