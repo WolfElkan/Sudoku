@@ -233,4 +233,51 @@ abstract class Sudoku {
 			}
 		}
 	}
+	public void boxprint() {
+		String topbar = "┏"; // Construct bars
+		String midbar = "┣"; 
+		String botbar = "┗"; 
+		String minbar = "┠";
+		for (int i=0; i<scale; i++) {
+			for (int j=0; j < scale * 2 + 1; j++) {
+				topbar += "━";
+				midbar += "━";
+				botbar += "━";
+				minbar += "─";
+			}
+			if (i < scale-1) {
+				topbar += "┳";
+				midbar += "╋";
+				botbar += "┻";
+				minbar += "╂";
+			} else {
+				topbar += "┓";
+				midbar += "┫";
+				botbar += "┛";
+				minbar += "┨";
+			}
+		}
+		System.out.println(topbar); // Print top bar
+		System.out.print("┃ "); // Print left bar
+		for (int i=0; i<size; i++) {
+			System.out.print(content[i]); // Print number
+			System.out.print(' '); // print space
+			if (i % pow(scale,3) == pow(scale,3)-1) { //Print mid bar
+				System.out.print("┃ ");
+				System.out.println();
+				if (i < size - 1) {
+					System.out.println(midbar);
+					System.out.print("┃ ");
+				} else {
+					System.out.println(botbar);
+				}
+			} else if (i % pow(scale,2) == pow(scale,2)-1) {
+				System.out.println("┃");
+				System.out.println(minbar);
+				System.out.print("┃ ");
+			} else if (i % scale == scale - 1) {
+				System.out.print("┃ ");
+			}
+		}
+	}
 }
