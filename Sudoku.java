@@ -40,8 +40,8 @@ abstract class Sudoku {
 		System.out.print(str);
 	}
 	Number content[];
-	int size;
-	int scale;
+	public int size;
+	public int scale;
 	// Constructor
 	public Sudoku(int scale) {
 		this.scale = scale;
@@ -239,11 +239,19 @@ abstract class Sudoku {
 		String botbar = "┗"; 
 		String minbar = "┠";
 		for (int i=0; i<scale; i++) {
-			for (int j=0; j < scale * 2 + 1; j++) {
-				topbar += "━";
-				midbar += "━";
-				botbar += "━";
-				minbar += "─";
+			for (int j=0; j < scale; j++) {
+				for (int k=0; k < 3; k++) {
+					topbar += "━";
+					midbar += "━";
+					botbar += "━";
+					minbar += "─";
+				}
+				if (j < scale-1) {
+					topbar += "┯";
+					midbar += "┿";
+					botbar += "┷";
+					minbar += "┼";
+				}
 			}
 			if (i < scale-1) {
 				topbar += "┳";
@@ -258,25 +266,26 @@ abstract class Sudoku {
 			}
 		}
 		System.out.println(topbar); // Print top bar
-		System.out.print("┃ "); // Print left bar
+		System.out.print("┃"); // Print left bar
 		for (int i=0; i<size; i++) {
 			System.out.print(content[i]); // Print number
-			System.out.print(' '); // print space
 			if (i % pow(scale,3) == pow(scale,3)-1) { //Print mid bar
-				System.out.print("┃ ");
+				System.out.print("┃"); // First right bar
 				System.out.println();
 				if (i < size - 1) {
 					System.out.println(midbar);
-					System.out.print("┃ ");
+					System.out.print("┃"); // First left bar
 				} else {
 					System.out.println(botbar);
 				}
 			} else if (i % pow(scale,2) == pow(scale,2)-1) {
-				System.out.println("┃");
+				System.out.println("┃"); // Lower right bar
 				System.out.println(minbar);
-				System.out.print("┃ ");
+				System.out.print("┃"); // Lower left bar
 			} else if (i % scale == scale - 1) {
-				System.out.print("┃ ");
+				System.out.print("┃"); // Middle bars
+			} else {
+				System.out.print("│"); // print space
 			}
 		}
 	}

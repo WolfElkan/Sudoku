@@ -85,6 +85,13 @@ class Number { // A number that can be in superposition
 		}
 	}
 	public String toString() {
+		if (isknown()) {
+			return " " + Integer.toString(value) + " ";
+		} else {
+			return diagram();
+		}
+	}
+	public String onechar() {
 		if (false) {
 			return DCLBOX();
 		} else if (true) {
@@ -99,6 +106,16 @@ class Number { // A number that can be in superposition
 			// String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 			// return alpha.substring(value-10,1);
 		}
+	}
+
+	public String quadrants = " ▗▖▄▝▐▞▟▘▚▌▙▀▜▛█";
+	public String diagram() {
+		Quadrant q = new Quadrant();
+		String result = "";
+		result += q.c(false,    false,     canbe(1), canbe(5));
+		result += q.c( canbe(2), canbe(3), canbe(6), canbe(7));
+		result += q.c( canbe(4), canbe(8),false,     canbe(9));
+		return result;
 	}
 	public void verbose() {
 		for (int i=0; i<max; i++) {
