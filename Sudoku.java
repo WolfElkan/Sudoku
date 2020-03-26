@@ -110,24 +110,32 @@ abstract class Sudoku {
 		}
 		System.out.println();
 	}
-	public void given(int[] givens) {
+	public int given(int[] givens) {
+		int changes = 0;
 		for (int i=0; i<size; i++) {
 			if (givens[i] != 0) {
-				content[i].mustbe(givens[i]);
+				changes += content[i].mustbe(givens[i]);
 			}
 		}
+		return changes;
 	}
-	public void eliminate() {
+	public int eliminate() {
+		int changes = 0;
 		for (int z=0; z<nZones; z++) {
 			if (debug) {
 				System.out.print(zone_names[z]);
 				System.out.println("-----------");
+			}
+			boolean[] needed = new boolean[size];
+			for (int i=0; i<size; i++) {
+				needed[i] = true;
 			}
 			for (int y=0; y<lZones; y++) {
 				int x = zones[z][y];
 				Number num = content[x];
 				if (num.isknown()) {
 					int val = num.value();
+					needed[val-1] = false;
 					if (debug) {
 						System.out.print(cell_names[x]);
 						System.out.println("----");
@@ -145,17 +153,30 @@ abstract class Sudoku {
 					}
 				}
 			}
-			// for (int y=0; y<lZones; y++) {
-			// 	int x = zones[z][y];
-			// 	Number num = content[x];
-			// 	// System.out.print("  y: ");
-			// 	// System.out.print(y);
-			// 	System.out.print("x: ");
-			// 	System.out.print(x);
-			// 	System.out.print(",  num: ");
-			// 	System.out.println(num);
+			// for (int i=0; i<size; i++) {
+			// 	if (needed[i]) {
+			// 		int count = 0;
+			// 		for (int y=0; y<lZones; y++) {
+			// 			int x = zones[z][y];
+			// 			Number num = content[x];
+			// 			if (num.canbe(i+1)) {
+			// 				count++;
+			// 			}
+			// 		}
+			// 		if (count == size-1) {
+			// 			for (int y=0; y<lZones; y++) {
+			// 				int x = zones[z][y];
+			// 				Number num = content[x];
+			// 				if (num.canbe(i+1)) {
+			// 					num.mustbe(i+1);
+			// 					break;
+			// 				}
+			// 			}
+			// 		}
+			// 	}
 			// }
 		}
+		return changes;
 	}
 	public int iterate() {
 		/// Record current state (copy contents)
@@ -268,7 +289,7 @@ abstract class Sudoku {
 		System.out.println(topbar); // Print top bar
 		System.out.print("┃"); // Print left bar
 		for (int i=0; i<size; i++) {
-			System.out.print(content[i]); // Print number
+			System.out.print(content[i].toBox()); // Print number
 			if (i % pow(scale,3) == pow(scale,3)-1) { //Print mid bar
 				System.out.print("┃"); // First right bar
 				System.out.println();

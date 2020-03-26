@@ -18,7 +18,8 @@ class Number { // A number that can be in superposition
 			possible[i] = true;
 		}
 	}
-	public void isnot(int num) {
+	public int isnot(int num) {
+		boolean debug = true;
 		if (debug) {
 			System.out.print(this);
 			System.out.print(" - ");
@@ -39,20 +40,25 @@ class Number { // A number that can be in superposition
 				System.out.print(" -> ");
 				System.out.print(this);
 			}
+			return 1;
 		}
 		if (debug) {System.out.println();}
+		return 0;
 	}
 	public boolean canbe(int num) {
 		return possible[num-offset];
 	}
-	public void mustbe(int num) {
+	public int mustbe(int num) {
+		int changes = 0;
 		for (int i=0; i<max; i++) {
+			changes += possible[i] ? 1 : 0;
 			possible[i] = false;
 		}
 		possible[num-offset] = true;
 		nEliminated = max - 1;
 		value = num;
 		known = true;
+		return changes - 1; // subtract 1 for the correct answer
 	}
 	public int value() {
 		if (known) {
@@ -85,6 +91,15 @@ class Number { // A number that can be in superposition
 		}
 	}
 	public String toString() {
+		String result = "";
+		for (int i=1; i<=max; i++) {
+			if (canbe(i)) {
+				result += Integer.toString(i);
+			}
+		}
+		return result;
+	}
+	public String toBox() {
 		if (isknown()) {
 			return " " + Integer.toString(value) + " ";
 		} else {
